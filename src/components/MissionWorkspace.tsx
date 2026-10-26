@@ -23,6 +23,7 @@ import {
   type ResearchProgress,
   type ResearchSource,
 } from '../lib/researchService';
+import { saveCase as persistCase, type SavedCase } from '../lib/caseStorage';
 
 type Mode = 'VISION' | 'NEURAL' | 'MOTION';
 type RunState = 'idle' | 'running' | 'complete' | 'error';
@@ -53,25 +54,18 @@ const newInputSource = (url: string): ResearchSource => ({
   status: 'queued',
 });
 
-const readSavedCases = () => {
-  try {
-    const value: unknown = JSON.parse(localStorage.getItem('augment-cases') || '[]');
-    return Array.isArray(value) ? value : [];
-  } catch {
-    return [];
-  }
-};
+type MissionWorkspaceProps = { loadedCase?: SavedCase | null };
 
-export const MissionWorkspace = () => {
-  const [mission, setMission] = useState('');
+export const MissionWorkspace = ({ loadedCase = null }: MissionWorkspaceProps) => {
+  const [mission, setMission] = useState(loadedCase?.brief.query || '');
   const [sourceInput, setSourceInput] = useState('');
-  const [sources, setSources] = useState<ResearchSource[]>([]);
+  const [sources, setSources] = useState<ResearchSource[]>(loadedCase?.brief.sources.filter((source) => source.kind === 'provided') || []);
   const [mode, setMode] = useState<Mode>('VISION');
-  const [runState, setRunState] = useState<RunState>('idle');
-  const [progress, setProgress] = useState<ResearchProgress>({ stage: 'calibrating', progress: 0, message: 'AWAITING MISSION' });
-  const [result, setResult] = useState<ResearchBrief | null>(null);
+  const [runState, setRunState] = useState<RunState>(loadedCase ? 'complete' : 'idle');
+  const [progress, setProgress] = useState<ResearchProgress>(loadedCase ? { stage: 'composing', progress: 100, message: 'SAVED CASE LOADED' } : { stage: 'calibrating', progress: 0, message: 'AWAITING MISSION' });
+  const [result, setResult] = useState<ResearchBrief | null>(loadedCase?.brief || null);
   const [completedActions, setCompletedActions] = useState<number[]>([]);
-  const [saved, setSaved] = useState(false);
+  const [saved, setSaved] = useState(Boolean(loadedCase));
   const [inputError, setInputError] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const controllerRef = useRef<AbortController | null>(null);
@@ -159,12 +153,14 @@ export const MissionWorkspace = () => {
 
   const saveCase = () => {
     if (!result) return;
-    const currentCases = readSavedCases();
-    localStorage.setItem('augment-cases', JSON.stringify([
-      { mission: result.query, brief: result, savedAt: new Date().toISOString() },
-      ...currentCases,
-    ].slice(0, 10)));
+    persistCase(result, loadedCase?.id);
     setSaved(true);
+  };
+
+  const cancelRun = () => {
+    controllerRef.current?.abort();
+    setRunState('idle');
+    setProgress({ stage: 'calibrating', progress: 0, message: 'RESEARCH CANCELLED' });
   };
 
   return (
@@ -191,7 +187,7 @@ export const MissionWorkspace = () => {
 
             <div className="mt-8"><p className="text-[10px] tracking-widest text-gray-500 mb-3">CHOOSE AN OPERATING MODE</p><div className="grid sm:grid-cols-3 gap-2">{modes.map((item) => <button type="button" key={item.id} onClick={() => setMode(item.id)} className={`text-left p-3 border transition-all ${mode === item.id ? 'border-red-400/50 bg-red-950/20' : 'border-white/10 bg-white/[0.02] hover:border-white/30'}`}><span className={`block text-[10px] tracking-widest mb-2 ${mode === item.id ? 'text-red-300' : 'text-gray-400'}`}>{item.id}</span><span className="block text-xs text-white mb-1">{item.title}</span><span className="block text-[10px] leading-relaxed text-gray-600">{item.description}</span></button>)}</div></div>
 
-            <div className="mt-8 flex flex-col sm:flex-row gap-3"><button type="button" onClick={runMission} disabled={!canRun} className="flex-1 inline-flex items-center justify-center gap-3 bg-white text-black py-4 text-xs font-bold tracking-widest uppercase disabled:cursor-not-allowed disabled:bg-white/20 disabled:text-gray-600 hover:bg-gray-200 transition-colors">{runState === 'running' ? <LoaderCircle size={16} className="animate-spin" /> : <ArrowRight size={16} />}{runState === 'running' ? 'Researching sources' : 'Run research'}</button><button type="button" onClick={resetMission} className="sm:w-14 border border-white/10 flex items-center justify-center py-3 text-gray-500 hover:text-white hover:border-white/30 transition-colors" aria-label="Reset mission"><RotateCcw size={16} /></button></div>
+             <div className="mt-8 flex flex-col sm:flex-row gap-3"><button type="button" onClick={runMission} disabled={!canRun} className="flex-1 inline-flex items-center justify-center gap-3 bg-white text-black py-4 text-xs font-bold tracking-widest uppercase disabled:cursor-not-allowed disabled:bg-white/20 disabled:text-gray-600 hover:bg-gray-200 transition-colors">{runState === 'running' ? <LoaderCircle size={16} className="animate-spin" /> : <ArrowRight size={16} />}{runState === 'running' ? 'Researching sources' : 'Run research'}</button>{runState === 'running' ? <button type="button" onClick={cancelRun} className="sm:w-32 border border-red-400/30 flex items-center justify-center py-3 text-[10px] tracking-widest text-red-300 hover:border-red-300/60 transition-colors">CANCEL</button> : <button type="button" onClick={resetMission} className="sm:w-14 border border-white/10 flex items-center justify-center py-3 text-gray-500 hover:text-white hover:border-white/30 transition-colors" aria-label="Reset mission"><RotateCcw size={16} /></button>}</div>
           </div>
 
           <div className="border border-white/10 bg-[#0d0d0d] min-h-[520px] relative overflow-hidden"><div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-red-500 via-white/30 to-transparent" /><div className="flex items-center justify-between px-5 sm:px-7 py-5 border-b border-white/10"><div className="flex items-center gap-3"><BookOpen size={16} className="text-red-300" /><span className="text-xs tracking-widest">AUGMENT BRIEF</span></div><span className="flex items-center gap-2 text-[9px] tracking-widest text-gray-600"><span className={`w-1.5 h-1.5 rounded-full ${runState === 'complete' ? 'bg-green-400' : runState === 'running' ? 'bg-amber-300 animate-pulse' : runState === 'error' ? 'bg-red-500' : 'bg-gray-600'}`} />{runState === 'complete' ? 'READY' : runState === 'running' ? 'PROCESSING' : runState === 'error' ? 'NEEDS INPUT' : 'AWAITING INPUT'}</span></div>
