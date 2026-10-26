@@ -1,0 +1,315 @@
+{
+  "ok": false,
+  "strict": false,
+  "browserSkipped": true,
+  "lint": {
+    "ok": false,
+    "errorCount": 4,
+    "warningCount": 11,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "studio_missing_editable_id",
+        "severity": "warning",
+        "message": "<div class=\"grid\" data-start=\"0\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/Users/skr/jarvis/AUGMENT -DESIGN/brag-output-2026-10-26-233610/composition/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit."
+      },
+      {
+        "code": "studio_missing_editable_id",
+        "severity": "warning",
+        "message": "<div class=\"vignette\" data-start=\"0\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/Users/skr/jarvis/AUGMENT -DESIGN/brag-output-2026-10-26-233610/composition/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit."
+      },
+      {
+        "code": "studio_missing_editable_id",
+        "severity": "warning",
+        "message": "<section class=\"boot\" data-start=\"0\" data-track-index=\"0\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/Users/skr/jarvis/AUGMENT -DESIGN/brag-output-2026-10-26-233610/composition/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit."
+      },
+      {
+        "code": "studio_missing_editable_id",
+        "severity": "warning",
+        "message": "<section class=\"surface\" data-start=\"0\" data-track-index=\"1\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/Users/skr/jarvis/AUGMENT -DESIGN/brag-output-2026-10-26-233610/composition/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit."
+      },
+      {
+        "code": "studio_missing_editable_id",
+        "severity": "warning",
+        "message": "<div class=\"callout\" data-start=\"3.1\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/Users/skr/jarvis/AUGMENT -DESIGN/brag-output-2026-10-26-233610/composition/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit."
+      },
+      {
+        "code": "studio_missing_editable_id",
+        "severity": "warning",
+        "message": "<div class=\"callout\" data-start=\"6.4\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/Users/skr/jarvis/AUGMENT -DESIGN/brag-output-2026-10-26-233610/composition/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit."
+      },
+      {
+        "code": "studio_missing_editable_id",
+        "severity": "warning",
+        "message": "<div class=\"callout\" data-start=\"9.5\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/Users/skr/jarvis/AUGMENT -DESIGN/brag-output-2026-10-26-233610/composition/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit."
+      },
+      {
+        "code": "studio_missing_editable_id",
+        "severity": "warning",
+        "message": "<div class=\"cursor\" data-start=\"2.3\" data-track-index=\"4\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/Users/skr/jarvis/AUGMENT -DESIGN/brag-output-2026-10-26-233610/composition/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit."
+      },
+      {
+        "code": "studio_missing_editable_id",
+        "severity": "warning",
+        "message": "<div class=\"cursor-ring\" data-start=\"2.3\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/Users/skr/jarvis/AUGMENT -DESIGN/brag-output-2026-10-26-233610/composition/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit."
+      },
+      {
+        "code": "studio_missing_editable_id",
+        "severity": "warning",
+        "message": "<section class=\"lockup\" data-start=\"12.7\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/Users/skr/jarvis/AUGMENT -DESIGN/brag-output-2026-10-26-233610/composition/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit."
+      },
+      {
+        "code": "gsap_css_transform_conflict",
+        "severity": "error",
+        "message": "\".cursor-ring\" has CSS `transform: translate(-15px,-15px)` and a GSAP tween animates x/y/scale. GSAP will overwrite the full CSS transform, discarding any translateX(-50%) centering or CSS scale value.",
+        "selector": ".cursor-ring",
+        "dataAttributes": {},
+        "sourceFile": "/Users/skr/jarvis/AUGMENT -DESIGN/brag-output-2026-10-26-233610/composition/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Remove `transform: translate(-15px,-15px)` from CSS and replace with GSAP properties: x: -15, y: -15. Example: tl.fromTo('.cursor-ring', { x: -15, y: -15 }, { x: -15, y: -15, ...yourAnimation }). tl.fromTo is exempt from this rule."
+      },
+      {
+        "code": "gsap_css_transform_conflict",
+        "severity": "error",
+        "message": "\".source-two\" has CSS `transform: translateX(-8px)` and a GSAP tween animates x. GSAP will overwrite the full CSS transform, discarding any translateX(-50%) centering or CSS scale value.",
+        "selector": ".source-two",
+        "dataAttributes": {},
+        "sourceFile": "/Users/skr/jarvis/AUGMENT -DESIGN/brag-output-2026-10-26-233610/composition/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Remove `transform: translateX(-8px)` from CSS and replace with GSAP properties: x: -8. Example: tl.fromTo('.source-two', { x: -8 }, { x: -8, ...yourAnimation }). tl.fromTo is exempt from this rule."
+      },
+      {
+        "code": "gsap_non_transform_motion",
+        "severity": "error",
+        "message": "GSAP tween on \".surface\" uses motion that snaps to integer device pixels: top. Layout and text-reflow properties snap during browser layout; roundProps rounds the tween value. Slow motion or an ease-out tail then stutters under the seek-by-frame capture engine. Animate transforms (x/y/scale/opacity) instead.",
+        "selector": ".surface",
+        "dataAttributes": {},
+        "sourceFile": "/Users/skr/jarvis/AUGMENT -DESIGN/brag-output-2026-10-26-233610/composition/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "replace top with the transform equivalent (y), e.g. tl.fromTo(\".surface\", { x: -1300 }, { x: 0, ...yourAnimation }). Transforms interpolate sub-pixel and stay smooth at any speed."
+      },
+      {
+        "code": "font_family_without_font_face",
+        "severity": "error",
+        "message": "Font family used without @font-face declaration: sfmono-regular. These are not in the auto-resolved font list, so the renderer cannot supply them automatically. Text will fall back to a generic font, producing incorrect typography in the video.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/Users/skr/jarvis/AUGMENT -DESIGN/brag-output-2026-10-26-233610/composition/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Add @font-face { font-family: '...'; src: url('capture/assets/fonts/...woff2'); } for each font family, pointing to the captured .woff2 files. For an OS-bundled system font (e.g. Hiragino Sans, Microsoft YaHei) that has no downloadable file, use src: local('Exact Font Name') instead. The declaration alone satisfies this check without needing a font file."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/Users/skr/jarvis/AUGMENT -DESIGN/brag-output-2026-10-26-233610/composition/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section> and its contents into a sub-composition file and mount it with data-composition-src."
+      }
+    ],
+    "filesScanned": 1
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "layout": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "duration": 0,
+    "samples": [],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 0,
+    "truncated": false
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": true,
+    "samples": [],
+    "checked": 0,
+    "passed": 0
+  },
+  "craft": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "step": 0,
+    "samples": 0
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": false,
+    "files": [],
+    "times": [],
+    "findingFiles": []
+  }
+}

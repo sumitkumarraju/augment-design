@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      :root { --bg: #030303; --panel: #0d0d0d; --line: rgba(255,255,255,.12); --muted: #7b8491; --ink: #f8fafc; --accent: #f87171; --soft-red: rgba(127,29,29,.35); --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; }
+      @font-face { font-family: 'sfmono-regular'; src: local('SFMono-Regular'); }
+      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+      * { box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; margin: 0; overflow: hidden; background: var(--bg); color: var(--ink); font-family: var(--mono); }
+      body { background: radial-gradient(circle at 50% 42%, #1c0808 0, #080808 28%, #030303 74%); }
+      .clip { position: absolute; }
+      #root { width: 1920px; height: 1080px; position: relative; overflow: hidden; }
+      .grid { position: absolute; inset: 0; opacity: .24; background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px); background-size: 54px 54px; mask-image: linear-gradient(to bottom, black 0%, transparent 85%); }
+      .vignette { position: absolute; inset: 0; background: radial-gradient(circle at center, transparent 38%, rgba(0,0,0,.72) 100%); pointer-events: none; }
+      .boot { inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; z-index: 10; }
+      .boot-brand { color: var(--accent); font-size: 16px; letter-spacing: .32em; margin-bottom: 26px; }
+      .boot-title { font-weight: 400; font-size: 74px; letter-spacing: -.08em; line-height: .95; }
+      .boot-sub { color: #68717f; font-size: 14px; letter-spacing: .18em; margin-top: 22px; }
+      .boot-bar { width: 480px; height: 3px; margin-top: 52px; background: rgba(255,255,255,.1); position: relative; overflow: hidden; }
+      .boot-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #7f1d1d, #f87171, white); box-shadow: 0 0 24px #f87171; }
+      .boot-status { width: 480px; display: flex; justify-content: space-between; color: #56606c; font-size: 10px; letter-spacing: .16em; margin-top: 12px; }
+      .surface { position: absolute; left: 170px; top: 110px; width: 1580px; height: 860px; border: 1px solid rgba(255,255,255,.2); border-radius: 22px; background: rgba(11,11,11,.94); box-shadow: 0 32px 100px rgba(0,0,0,.72), 0 0 100px rgba(127,29,29,.16); overflow: hidden; z-index: 4; transform-origin: 50% 50%; }
+      .window-bar { height: 50px; display: flex; align-items: center; justify-content: space-between; padding: 0 22px; border-bottom: 1px solid var(--line); background: rgba(255,255,255,.035); }
+      .lights { display: flex; gap: 8px; } .lights i { width: 11px; height: 11px; display: block; border-radius: 50%; } .lights i:nth-child(1){background:#ff5f57}.lights i:nth-child(2){background:#febc2e}.lights i:nth-child(3){background:#28c840}
+      .window-title { color: #919aa6; font-size: 11px; letter-spacing: .09em; } .window-status { color: #606a76; font-size: 10px; letter-spacing: .12em; }
+      .app { height: calc(100% - 50px); display: grid; grid-template-columns: 240px 1fr; }
+      .sidebar { border-right: 1px solid var(--line); background: rgba(255,255,255,.018); padding: 26px 16px; }
+      .brand { display:flex; align-items:center; gap:10px; font-weight:600; letter-spacing:.06em; font-size:14px; margin-bottom:28px; } .brand-mark { width:29px; height:29px; border:1px solid rgba(248,113,113,.65); border-radius:9px; display:grid; place-items:center; color:var(--accent); }
+      .search { height:34px; border:1px solid var(--line); color:#626c78; font-size:9px; padding:10px; border-radius:7px; margin-bottom:28px; }
+      .side-label { color:#5e6874; font-size:8px; letter-spacing:.2em; margin:20px 10px 8px; } .nav { height:36px; padding:11px 10px; color:#75808c; font-size:10px; border-radius:7px; } .nav.active { color:#fff; background:rgba(255,255,255,.08); border-left:2px solid var(--accent); }
+      .plan { position:absolute; left:16px; bottom:26px; width:208px; border:1px solid var(--line); padding:13px; color:#75808c; font-size:9px; line-height:1.5; } .plan strong { color:#e6e9ee; font-size:10px; display:block; margin-bottom:7px; } .mini-bar { height:3px; background:#25282c; margin-top:10px; } .mini-bar b { display:block; width:62%; height:100%; background:#f87171; }
+      .main { position:relative; padding:34px 40px; } .eyebrow { color:#65707c; font-size:9px; letter-spacing:.2em; } .headline { font-size:29px; font-weight:500; letter-spacing:-.06em; margin-top:9px; } .sync { position:absolute; right:40px; top:35px; border:1px solid rgba(34,197,94,.25); padding:8px 12px; border-radius:50px; color:#8e9a9e; font-size:9px; letter-spacing:.15em; } .sync b { display:inline-block; width:6px; height:6px; border-radius:50%; background:#22c55e; margin-right:7px; }
+      .workspace { display:grid; grid-template-columns: 1fr 1fr; gap:14px; margin-top:32px; } .card { border:1px solid var(--line); background:rgba(255,255,255,.035); padding:23px; border-radius:2px; } .card-head { color:#d5d9de; font-size:11px; letter-spacing:.11em; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--line); padding-bottom:16px; margin-bottom:20px; } .tag { font-size:8px; color:#69727d; letter-spacing:.15em; }
+      .source-one, .source-two { opacity: 0; }
+      .mission-label { color:#737d89; font-size:8px; letter-spacing:.15em; margin-bottom:11px; } .mission-input { min-height:82px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.17); padding:16px; color:#f8fafc; font-size:12px; line-height:1.5; } .caret { display:inline-block; width:2px; height:13px; background:var(--accent); vertical-align:-2px; margin-left:3px; }
+      .source-input { margin-top:17px; height:34px; border:1px solid var(--line); color:#75808c; padding:10px; font-size:9px; } .chips { display:flex; gap:8px; margin-top:10px; } .chip { border:1px solid rgba(248,113,113,.3); color:#b5bdc8; padding:7px 10px; font-size:8px; }
+      .modes { display:grid; grid-template-columns:repeat(3,1fr); gap:7px; margin-top:18px; } .mode { border:1px solid var(--line); padding:11px; min-height:62px; } .mode.active { border-color:rgba(248,113,113,.55); background:rgba(127,29,29,.2); } .mode b { display:block; color:#f87171; font-size:8px; letter-spacing:.16em; margin-bottom:7px; } .mode span { color:#808996; font-size:8px; line-height:1.35; }
+      .run { margin-top:18px; height:39px; background:#f8fafc; color:#080808; display:flex; align-items:center; justify-content:center; font-size:9px; letter-spacing:.16em; font-weight:600; }
+      .brief { min-height:450px; position:relative; } .brief:before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,#f87171,rgba(255,255,255,.3),transparent); } .brief-title { color:#dfe3e7; font-size:11px; letter-spacing:.12em; padding-bottom:17px; border-bottom:1px solid var(--line); margin-bottom:24px; } .brief-section { border-bottom:1px solid var(--line); padding-bottom:17px; margin-bottom:18px; } .brief-label { color:#f87171; font-size:8px; letter-spacing:.14em; margin-bottom:9px; } .brief-copy { color:#b5bdc8; font-size:10px; line-height:1.6; } .findings { padding-left:17px; } .finding { color:#a6afb9; font-size:9px; line-height:1.5; margin-bottom:8px; } .finding em { color:#f87171; font-style:normal; margin-right:8px; } .trail { display:grid; gap:7px; } .trail-row { display:flex; justify-content:space-between; color:#7f8995; border:1px solid var(--line); padding:8px; font-size:8px; } .trail-row b { color:#f87171; font-weight:400; }
+      .actions { display:flex; justify-content:space-between; align-items:center; } .save { border:1px solid rgba(248,113,113,.4); color:#fca5a5; padding:7px 10px; font-size:8px; letter-spacing:.15em; } .saved { color:#86efac; border-color:rgba(134,239,172,.4); }
+      .callout { color:#fca5a5; border:1px solid rgba(248,113,113,.5); background:rgba(50,10,10,.84); padding:10px 13px; font-size:10px; letter-spacing:.12em; box-shadow:0 8px 30px rgba(0,0,0,.45); white-space:nowrap; } .callout:after { content:''; position:absolute; width:62px; height:1px; background:rgba(248,113,113,.6); left:100%; top:50%; }
+      .cursor { width:22px; height:30px; z-index:30; filter:drop-shadow(0 3px 5px rgba(0,0,0,.8)); transform-origin:10% 10%; } .cursor:before { content:''; display:block; width:0; height:0; border-left:11px solid white; border-top:25px solid transparent; transform:rotate(-22deg); } .cursor:after { content:''; position:absolute; left:5px; top:8px; width:3px; height:17px; background:#101010; transform:rotate(-22deg); }
+      .cursor-ring { width:52px; height:52px; border:1px solid rgba(248,113,113,.65); border-radius:50%; z-index:29; box-shadow:0 0 0 8px rgba(248,113,113,.07), 0 0 24px rgba(248,113,113,.4); opacity:0; }
+      .lockup { inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:20; background:rgba(3,3,3,.95); opacity:0; } .lockup-line { color:#f87171; font-size:12px; letter-spacing:.3em; margin-bottom:28px; } .lockup-title { font-size:62px; font-weight:400; letter-spacing:-.09em; } .lockup-copy { color:#76808b; font-size:11px; letter-spacing:.25em; margin-top:20px; }
+      /* Contrast and presentation overrides for the rendered film. */
+      .boot-sub { color: #a6b0bb; }
+      .boot-status { color: #a3adb8; }
+      .window-title { color: #b7c0ca; } .window-status { color: #a2acb7; }
+      .search, .side-label { color: #a3adb8; } .nav, .plan { color: #a9b3bd; }
+      .eyebrow, .sync, .tag, .mission-label, .source-input { color: #a3adb8; }
+      .mode span, .trail-row { color: #a7b1bc; }
+      .callout { z-index: 25; background: rgba(50,10,10,.96); }
+    </style>
+  </head>
+  <body>
+    <main id="root" data-composition-id="main" data-start="0" data-duration="15" data-width="1920" data-height="1080">
+      <div id="background-grid" class="grid clip" data-start="0" data-duration="15"></div><div id="vignette" class="vignette clip" data-start="0" data-duration="15"></div>
+      <section id="boot-scene" class="boot clip" data-start="0" data-duration="2.6" data-track-index="0">
+        <div class="boot-brand">AUGMENT / CONTEXT OS</div><h1 class="boot-title">MAKE THE NEXT<br/>MOVE CLEAR.</h1><div class="boot-sub">PREPARING YOUR ADAPTIVE WORKSPACE</div><div class="boot-bar"><div class="boot-fill"></div></div><div class="boot-status"><span>BOOT SEQUENCE</span><span class="boot-percent">0%</span></div>
+      </section>
+      <section id="product-surface" class="surface clip" data-start="0" data-duration="15" data-track-index="1">
+        <div class="window-bar"><div class="lights"><i></i><i></i><i></i></div><div class="window-title">✦ AUGMENT — Context OS</div><div class="window-status">LOCAL SESSION / 0.2</div></div>
+        <div class="app"><aside class="sidebar"><div class="brand"><div class="brand-mark">✦</div> AUGMENT</div><div class="search">⌕ &nbsp; Search workspace</div><div class="side-label">WORKSPACE</div><div class="nav active">▦ &nbsp; Mission workspace</div><div class="nav">▤ &nbsp; Case records</div><div class="nav">◌ &nbsp; System status</div><div class="plan"><strong>CORE PLAN <span style="float:right;color:#22c55e">●</span></strong>Your local workspace is ready for its next mission.<div class="mini-bar"><b></b></div><span>3 / 5 missions this month</span></div></aside>
+          <div class="main"><div class="eyebrow">MISSION CONTROL</div><div class="headline">Make the next move clear.</div><div class="sync"><b></b> SYNCED</div><div class="workspace"><div class="card builder"><div class="card-head">MISSION BUILDER <span class="tag">LIVE SOURCES / CITED OUTPUT</span></div><div class="mission-label">WHAT ARE YOU TRYING TO MOVE FORWARD?</div><div class="mission-input"><span class="typed"></span><span class="caret"></span></div><div class="source-input">⌁ &nbsp; Paste a URL or source link</div><div class="chips"><div class="chip source-one">＋ developer.mozilla.org</div><div class="chip source-two">＋ w3.org</div></div><div class="mission-label" style="margin-top:19px">CHOOSE AN OPERATING MODE</div><div class="modes"><div class="mode active"><b>VISION</b><span>Extract facts and compare sources.</span></div><div class="mode neural"><b>NEURAL</b><span>Connect context and tradeoffs.</span></div><div class="mode motion"><b>MOTION</b><span>Turn conclusions into actions.</span></div></div><div class="run">→ &nbsp; RUN RESEARCH</div></div>
+            <div class="card brief"><div class="brief-title">▣ &nbsp; AUGMENT BRIEF <span class="tag" style="float:right">● PROCESSING</span></div><div class="brief-section summary"><div class="brief-label">MISSION SUMMARY</div><div class="brief-copy">A source-grounded brief is forming from your mission, context, and intent.</div></div><div class="brief-section finding-block"><div class="brief-label" style="color:#77818e">KEY FINDINGS</div><div class="findings"><div class="finding"><em>01</em> Evidence first: every important claim has a source trail.</div><div class="finding"><em>02</em> Saved context makes each decision compound.</div><div class="finding"><em>03</em> Next actions stay human-approved.</div></div></div><div class="brief-section trail-block"><div class="brief-label" style="color:#77818e">SOURCE TRAIL</div><div class="trail"><div class="trail-row"><span>⌁ developer.mozilla.org</span><b>READY ↗</b></div><div class="trail-row"><span>⌁ w3.org</span><b>READY ↗</b></div></div></div><div class="actions"><span class="brief-label" style="color:#77818e;margin:0">NEXT ACTIONS</span><div class="save">⇩ &nbsp; SAVE CASE</div></div></div></div></div>
+        </div>
+      </section>
+      <div id="builder-callout" class="callout callout-builder clip" data-start="3.1" data-duration="3.2" style="left:260px;top:195px;opacity:0">MISSION BUILDER / TYPE A MISSION</div>
+      <div id="sources-callout" class="callout callout-sources clip" data-start="6.4" data-duration="3.2" style="left:280px;top:760px;opacity:0">LIVE SOURCES / CITED OUTPUT</div>
+      <div id="brief-callout" class="callout callout-brief clip" data-start="9.5" data-duration="3.6" style="left:1410px;top:270px;opacity:0">EVIDENCE → BRIEF → ACTION</div>
+      <div id="cursor" class="cursor clip" data-start="2.3" data-duration="12.5" data-track-index="4"></div><div id="cursor-ring" class="cursor-ring clip" data-start="2.3" data-duration="12.5"></div>
+      <section id="lockup" class="lockup clip" data-start="12.7" data-duration="2.3"><div class="lockup-line">RESEARCH → CONTEXT → DECISION → NEXT ACTION</div><div class="lockup-title">AUGMENT</div><div class="lockup-copy">A CALM INTERFACE FOR COMPLEX WORK</div></section>
+      <audio id="music" class="clip" data-start="0" data-duration="15" data-track-index="8" data-has-audio="true" data-volume="0.28" src="assets/music/augment-pulse.wav"></audio>
+    </main>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out' } });
+      const typeText = 'Compare the best stack for launching my research product.';
+      const state = { typed: '' };
+      tl.to('.boot-fill', { width: '100%', duration: 2.25, ease: 'power2.inOut' }, 0);
+        tl.to('.boot-percent', { duration: 2.25, textContent: '100%', snap: { textContent: 1 }, ease: 'none' }, 0);
+        tl.to('.boot', { opacity: 0, scale: 1.04, filter: 'blur(8px)', duration: .35 }, 2.25);
+        gsap.set('.surface', { y: 970 });
+        gsap.set('.cursor-ring', { x: -15, y: -15 });
+        gsap.set(['.source-one', '.source-two'], { x: -8 });
+        tl.to('.surface', { y: 0, duration: .9, ease: 'power4.out' }, 2.15);
+        tl.to('.surface', { scale: 1.14, x: -240, y: 70, duration: .65, ease: 'power3.inOut' }, 3.0);
+        tl.to('.typed', { duration: 1.35, onUpdate: function() { const n = Math.floor(this.progress() * typeText.length); state.typed = typeText.slice(0, n); document.querySelector('.typed').textContent = state.typed; }, ease: 'none' }, 3.35);
+        tl.to('.cursor', { x: 610, y: 400, duration: .75 }, 3.0);
+        tl.to('.cursor-ring', { x: 610, y: 400, opacity: 1, duration: .25 }, 3.5);
+        tl.to('.cursor', { x: 545, y: 595, duration: .65 }, 4.55);
+        tl.to('.cursor-ring', { x: 545, y: 595, duration: .4 }, 4.55);
+        tl.to('.neural', { borderColor: 'rgba(248,113,113,.5)', backgroundColor: 'rgba(127,29,29,.16)', duration: .2 }, 5.25);
+        tl.to('.motion', { borderColor: 'rgba(248,113,113,.5)', backgroundColor: 'rgba(127,29,29,.16)', duration: .2 }, 5.7);
+        tl.to('.callout-builder', { opacity: 1, y: -8, duration: .3 }, 3.05);
+        tl.to('.callout-builder', { opacity: 0, duration: .25 }, 5.85);
+        tl.to('.surface', { scale: 1, x: 0, y: 0, duration: .7, ease: 'power3.inOut' }, 6.15);
+        tl.to('.cursor', { x: 490, y: 735, duration: .55 }, 6.4);
+        tl.to('.cursor-ring', { x: 490, y: 735, duration: .45 }, 6.4);
+        tl.to('.source-one', { opacity: 1, x: 0, duration: .3 }, 6.65);
+        tl.to('.source-two', { opacity: 1, x: 0, duration: .3 }, 6.95);
+        tl.to('.callout-sources', { opacity: 1, y: -8, duration: .3 }, 6.45);
+        tl.to('.callout-sources', { opacity: 0, duration: .25 }, 8.85);
+        tl.to('.summary', { opacity: 0, y: -8, duration: .3 }, 9.25);
+        tl.to('.finding-block', { opacity: 1, y: 0, duration: .4 }, 9.35);
+        tl.to('.trail-block', { opacity: 1, y: 0, duration: .4 }, 9.65);
+        tl.to('.cursor', { x: 1270, y: 700, duration: .85 }, 9.6);
+        tl.to('.cursor-ring', { x: 1270, y: 700, duration: .7 }, 9.6);
+        tl.to('.callout-brief', { opacity: 1, y: -8, duration: .3 }, 9.4);
+        tl.to('.callout-brief', { opacity: 0, duration: .25 }, 12.1);
+        tl.to('.cursor', { x: 1235, y: 735, duration: .35 }, 11.75);
+        tl.to('.cursor-ring', { x: 1235, y: 735, scale: 1.2, duration: .3 }, 11.75);
+        tl.to('.save', { backgroundColor: 'rgba(34,197,94,.12)', color: '#86efac', borderColor: 'rgba(134,239,172,.5)', textContent: '✓  SAVED', duration: .28 }, 12.15);
+        tl.to('.surface', { opacity: 0, duration: .3 }, 12.55);
+        tl.to('.lockup', { opacity: 1, duration: .55, ease: 'power2.inOut' }, 12.65);
+      window.__timelines.main = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
