@@ -16,7 +16,8 @@
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "tailwindcss": "^4.3.3",
-    "three": "^0.186.1"
+    "three": "^0.186.1",
+    "v86": "^0.5.472"
   },
   "devDependencies": {
     "@types/node": "^24.13.3",
