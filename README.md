@@ -3,6 +3,7 @@
 > A calm research-to-action workspace for turning a mission into cited evidence, persistent context, and the next useful move.
 
 [![Live site](https://img.shields.io/badge/live-augment--design.vercel.app-f87171?style=flat-square)](https://augment-design.vercel.app/)
+[![GitHub](https://img.shields.io/badge/source-GitHub-181717?style=flat-square&logo=github)](https://github.com/sumitkumarraju/augment-design)
 [![Built with React](https://img.shields.io/badge/React-19-61dafb?style=flat-square&logo=react&logoColor=white)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-6-3178c6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-8-646cff?style=flat-square&logo=vite&logoColor=white)](https://vite.dev/)
@@ -29,7 +30,7 @@ The product is organized around one loop:
 
 ## Live demo
 
-Visit **[augment-design.vercel.app](https://augment-design.vercel.app/)**.
+Visit **[augment-design.vercel.app](https://augment-design.vercel.app/)**. Source: **[github.com/sumitkumarraju/augment-design](https://github.com/sumitkumarraju/augment-design)**.
 
 The project also includes a 15-second product walkthrough at [`brag.mp4`](./brag-output-2026-10-26-233610/brag.mp4).
 
